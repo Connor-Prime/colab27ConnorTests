@@ -5,7 +5,8 @@ import {
   useMapsLibrary,
   useMap,
 } from "@vis.gl/react-google-maps"
-
+import { getWaypointArray } from '../scripts/waypointFromString';
+import { getRouteTime } from '../scripts/compareRoutes';
 
 export default function DirectionMapSpace() {
       const position = {
@@ -46,30 +47,13 @@ function Directions( {start, stops }){
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
 
-    let waypointsPlaces=sessionStorage.getItem("waypoints");
-
-    console.log(waypointsPlaces);
-
     let testArray=[]
 
-    let placeName ="";
-    let foundSwiggle=false;
-
-    for (let i =0;i<waypointsPlaces.length;i++){
-      if(waypointsPlaces[i]+waypointsPlaces[i+1]!='~,'){
-        placeName+=waypointsPlaces[i]
-      }else if(waypointsPlaces[i]=='~'){
-        testArray.push({location:placeName})
-        placeName=""
-      }
-
-      if(foundSwiggle){
-        foundSwiggle=false;
-      }
-    }
-
-    testArray.push({location:placeName})
+    testArray=getWaypointArray();
     console.log(testArray);
+
+    getRouteTime("82 Eucalyptus Rd, Berkeley, CA 94705","Fisherman's Wharf, San Francisco, CA",directionsService);
+
     directionsService.route({
      
       // origin: start,

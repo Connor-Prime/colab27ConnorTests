@@ -42,7 +42,7 @@ const AddRemoveStop = () => {
 
     sessionStorage.setItem("waypoints",stops);
     console.log(sessionStorage.getItem("waypoints"))
-    // navigate('/MapSpace')
+    navigate('/MapSpace')
     
   };
 
