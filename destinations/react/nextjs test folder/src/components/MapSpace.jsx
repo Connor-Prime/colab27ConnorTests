@@ -7,6 +7,8 @@ import {
 } from "@vis.gl/react-google-maps"
 
 
+
+import { getStartPoint } from './Input/routeInfo.ts'
 export default function DirectionMapSpace() {
       const position = {
         lat: 32.748994,
@@ -46,25 +48,9 @@ function Directions( {start, stops }){
   useEffect(() => {
     if (!directionsService || !directionsRenderer) return;
 
-    let waypointsPlaces=sessionStorage.getItem("waypoints");
-
-    console.log(waypointsPlaces);
-
-    let testArray=[]
-
-    let placeName ="";
-
-    for (let i =0;i<waypointsPlaces.length;i++){
-      if(waypointsPlaces[i]!=','||i<waypointsPlaces.length-1){
-        placeName+=waypointsPlaces[i]
-      }else{
-        testArray.push({location:placeName})
-      }
-    }
-
-    testArray.push({location:waypointsPlaces})
-
-    directionsService.route({
+    directionsService.route(
+      
+      {
      
       // origin: start,
       // waypoints: [
@@ -73,26 +59,26 @@ function Directions( {start, stops }){
       //   { location: stops }  
       // ],
 
-      origin: sessionStorage.getItem("startPoint"),
-      waypoints: testArray
-      
-    //   [
-    //     { location: "oceanside, ca" }, 
-    //     { location: "temecula, ca" },
-    //     { location: 'San Diego, CA' }  
-    // ]
-     
-    ,
-      destination:sessionStorage.getItem("startPoint"),
+      origin: sessionStorage.getItem("start"),
+      waypoints: [
+        { location: "oceanside, ca" }, 
+        { location: "temecula, ca" },
+        { location: 'San Diego, CA' }  
+    ],
+      destination: "Los Angelas, CA",
       travelMode: google.maps.TravelMode.DRIVING,
       provideRouteAlternatives: true,
     })
     .then((res) => {
+      console.log(res);
       directionsRenderer.setDirections(res);
       setRoutes(res.routes);
-      console.log(routes)
+      console.log(res);
 
-    })
+    }
+    // getRouteInfo()
+    
+    )
     .catch(error => {
         console.log(error("error fetching directions:", error))
     })

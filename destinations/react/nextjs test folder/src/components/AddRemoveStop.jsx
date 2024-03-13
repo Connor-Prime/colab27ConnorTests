@@ -3,7 +3,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useNavigate } from 'react-router-dom'
-
+import {LocationSearch} from './Input/TabInput';
+import script from "../scripts/script";
+import { setStartPoint } from "./Input/routeInfo";
 
 const AddRemoveStop = () => {
   const [fields, setFields] = useState([{ label: "Stop", type: "text" }]);
@@ -29,15 +31,10 @@ const AddRemoveStop = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const startLocation = start;
-    const stops = fields.map(field => (field.value));
+    const stops = fields.map(field => field.value);
     console.log('Stop Point Dict', stops);
     console.log('start location',startLocation);
-
-
-    console.log(stops);
-    sessionStorage.setItem("waypoints",stops);
-    console.log(sessionStorage.getItem("waypoints"))
-    navigate('/MapSpace')
+    navigate('/Directions')
     
   };
 
@@ -56,11 +53,12 @@ const AddRemoveStop = () => {
           type="text"
           placeholder="Start"
           value={start}
-          id="startInput"
           size="sm"
-          onChange={(e) => {setStart(e.target.value); sessionStorage.setItem("startPoint", e.target.value);}}
+          onChange={(e) => {sessionStorage.setItem("startPoint", e.target.value);}}
         />
+        
       </FloatingLabel>
+
       {fields.map((field, index) => (
         <div key={index}>
           <FloatingLabel controlId={`stop${index}`} label="Stop">
