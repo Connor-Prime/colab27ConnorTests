@@ -35,9 +35,14 @@ const AddRemoveStop = () => {
 
 
     console.log(stops);
+
+    for(let i=0;i<stops.length;i++){
+      stops[i]+="~"
+    }
+
     sessionStorage.setItem("waypoints",stops);
     console.log(sessionStorage.getItem("waypoints"))
-    navigate('/MapSpace')
+    // navigate('/MapSpace')
     
   };
 

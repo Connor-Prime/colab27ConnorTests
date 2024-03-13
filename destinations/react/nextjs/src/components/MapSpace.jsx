@@ -53,13 +53,18 @@ function Directions( {start, stops }){
     let testArray=[]
 
     let placeName ="";
+    let foundSwiggle=false;
 
     for (let i =0;i<waypointsPlaces.length;i++){
-      if(waypointsPlaces[i]!=','){
+      if(waypointsPlaces[i]+waypointsPlaces[i+1]!='~,'){
         placeName+=waypointsPlaces[i]
-      }else if(waypointsPlaces[i]==','){
+      }else if(waypointsPlaces[i]=='~'){
         testArray.push({location:placeName})
         placeName=""
+      }
+
+      if(foundSwiggle){
+        foundSwiggle=false;
       }
     }
 
