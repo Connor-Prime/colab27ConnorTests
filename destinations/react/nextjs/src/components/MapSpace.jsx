@@ -55,15 +55,16 @@ function Directions( {start, stops }){
     let placeName ="";
 
     for (let i =0;i<waypointsPlaces.length;i++){
-      if(waypointsPlaces[i]!=','||i<waypointsPlaces.length-1){
+      if(waypointsPlaces[i]!=','){
         placeName+=waypointsPlaces[i]
-      }else{
+      }else if(waypointsPlaces[i]==','){
         testArray.push({location:placeName})
+        placeName=""
       }
     }
 
-    testArray.push({location:waypointsPlaces})
-
+    testArray.push({location:placeName})
+    console.log(testArray);
     directionsService.route({
      
       // origin: start,
